@@ -1,0 +1,1029 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Every U.S. House from 1949 to 2026 as a voting-agreement network, with the political events that shaped each Congress.">
+<meta property="og:title" content="The Rise of Partisanship, 1949–2026">
+<meta property="og:description" content="How the House stopped voting across party lines, Congress by Congress.">
+<meta property="og:image" content="poster.jpg">
+<meta property="og:type" content="website">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<title>House Divided, 1949–2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a roll-call ledger. Hero thesis (video + cross-party chart), a sticky Congress index, then one entry per Congress: slide, facts, events, story. */
+:root {
+  --paper: #f3f5f7;
+  --sheet: #ffffff;
+  --ink: #1b2530;
+  --muted: #5a6774;
+  --rule: #d6dde4;
+  --dem: #2a7fc1;
+  --rep: #b3173b;
+  --teal: #2e6a85;
+  --display: "Oswald", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f151b; --sheet: #161e26; --ink: #e5eaef; --muted: #9aa7b3; --rule: #2a3540;
+    --dem: #5aa5df; --rep: #e25a74; --teal: #74b0c9; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f151b; --sheet: #161e26; --ink: #e5eaef; --muted: #9aa7b3; --rule: #2a3540;
+  --dem: #5aa5df; --rep: #e25a74; --teal: #74b0c9; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 84px); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--paper); color: var(--ink); font: 400 1.0625rem/1.6 var(--serif); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); }
+a { color: var(--teal); }
+a:focus-visible, .chip:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 3px; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: .92em; }
+
+/* hero */
+.hero { padding-block: clamp(32px, 6vw, 72px) 28px; display: grid; gap: 28px; grid-template-columns: minmax(0, 1fr); }
+.hero > * { min-width: 0; }
+.kicker { font: 500 .78rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1 { font-family: var(--display); font-weight: 600; text-transform: uppercase; line-height: .95; margin: .3rem 0 0;
+     font-size: clamp(2.6rem, 8vw, 5.6rem); letter-spacing: .005em; text-wrap: balance; }
+h1 .r { color: var(--rep); } h1 .t { color: var(--teal); display: block; }
+.lede { max-width: 62ch; font-size: 1.15rem; margin: 0; }
+.lede strong { font-weight: 600; }
+.top { display: grid; gap: 28px; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; }
+@media (max-width: 860px) { .top { grid-template-columns: minmax(0, 1fr); } }
+video { width: 100%; height: auto; aspect-ratio: 16/9; display: block; background: #000; border-radius: 4px; }
+.vcap { font: .82rem/1.45 var(--mono); color: var(--muted); margin: .5rem 0 0; }
+.credits { display: grid; gap: .15rem; font-size: .98rem; margin: 0; padding: 0; list-style: none; }
+.credits li:first-child { font-weight: 600; }
+.method { font-size: .98rem; color: var(--ink); margin: 0; max-width: 62ch; }
+
+/* chart */
+.chartbox { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 18px 18px 10px; }
+.chartbox h2 { font: 600 1.15rem/1.2 var(--display); text-transform: uppercase; letter-spacing: .02em; margin: 0 0 .2rem; }
+.chartbox p { margin: 0 0 .6rem; color: var(--muted); font-size: .92rem; }
+.chartscroll { overflow-x: auto; }
+.chart { width: 100%; min-width: 560px; height: auto; display: block; }
+.chart .g { stroke: var(--rule); stroke-width: 1; }
+.chart .ax { fill: var(--muted); font: 12px var(--mono); }
+.chart .an { fill: var(--ink); font: 600 13px var(--mono); }
+.chart .ln { fill: none; stroke: var(--teal); stroke-width: 2.5; stroke-linejoin: round; }
+.chart .ar { fill: var(--teal); opacity: .12; }
+.chart .pt { fill: var(--sheet); stroke: var(--teal); stroke-width: 2; }
+.chart .pt.hi { fill: var(--teal); }
+.chart .hit { fill: transparent; }
+.chart a:hover .pt, .chart a:focus .pt { fill: var(--teal); }
+.chart .sd { fill: var(--dem); } .chart .sr { fill: var(--rep); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font: .8rem var(--mono); color: var(--muted); margin-top: 4px; }
+.legend i { display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: -1px; }
+
+/* index */
+.index { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper);
+         border-block: 1px solid var(--rule); }
+.index .strip { display: flex; gap: 4px; overflow-x: auto; padding-block: 8px; scrollbar-width: thin; }
+.chip { flex: 0 0 auto; display: grid; justify-items: center; min-width: 46px; padding: 4px 6px 3px; text-decoration: none;
+        color: var(--ink); border-bottom: 3px solid transparent; }
+.chip b { font: 600 1rem/1 var(--display); }
+.chip span { font: .66rem/1.3 var(--mono); color: var(--muted); }
+.chip.d { border-bottom-color: color-mix(in srgb, var(--dem) 55%, transparent); }
+.chip.r { border-bottom-color: color-mix(in srgb, var(--rep) 55%, transparent); }
+.chip.on { background: var(--sheet); }
+.chip.on.d { border-bottom-color: var(--dem); } .chip.on.r { border-bottom-color: var(--rep); }
+
+/* entries */
+.list { display: grid; gap: 0; padding-block: 12px 64px; }
+.cong { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 28px; padding-block: 36px;
+        border-bottom: 1px solid var(--rule); align-items: start; }
+@media (max-width: 900px) { .cong { grid-template-columns: minmax(0, 1fr); gap: 16px; padding-block: 28px; } }
+.slide { margin: 0; }
+.slide img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; background: #fff; border: 1px solid var(--rule); border-radius: 3px; }
+.body { min-width: 0; display: grid; gap: 14px; }
+.body header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px;
+               border-bottom: 2px solid var(--ink); padding-bottom: 6px; }
+h2 { font: 600 1.6rem/1.1 var(--display); text-transform: uppercase; margin: 0; letter-spacing: .01em; }
+h2 .num { font-size: 1.5em; } h2 sup { font-size: .45em; vertical-align: .9em; margin-left: 1px; }
+.yrs { font: 500 1.05rem/1 var(--mono); margin: 0; color: var(--muted); font-variant-numeric: tabular-nums; }
+.facts { margin: 0; display: grid; gap: 8px; }
+.facts div { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 10px; align-items: baseline; }
+@media (max-width: 480px) { .facts div { grid-template-columns: minmax(0, 1fr); gap: 0; } }
+dt { font: 500 .72rem/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+dd { margin: 0; font-size: .98rem; }
+.bar { display: flex; height: 8px; border-radius: 2px; overflow: hidden; background: var(--rule); margin: 6px 0 4px; }
+.bar i { display: block; height: 100%; } .bd { background: var(--dem); } .br { background: var(--rep); }
+.sn { font: .84rem/1.4 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.dn { color: var(--dem); font-weight: 500; } .rn { color: var(--rep); font-weight: 500; }
+.stats dd { font-size: .9rem; color: var(--muted); } .stats strong { color: var(--ink); font-weight: 500; }
+.events { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.events li { padding-left: 1.1rem; position: relative; font-size: .95rem; }
+.events li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; border-radius: 50%;
+                     background: var(--teal); }
+.story { margin: 0; max-width: 62ch; }
+footer { border-top: 1px solid var(--rule); padding-block: 28px 48px; color: var(--muted); font-size: .9rem; }
+footer p { max-width: 75ch; margin: 0 0 .7rem; }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <p class="kicker">U.S. House roll-call votes · 81st–119th Congress</p>
+      <h1><span class="r">The Rise of</span><span class="t">Partisanship</span></h1>
+    </div>
+    <div class="top">
+      <div>
+        <video controls preload="metadata" poster="poster.jpg" playsinline>
+          <source src="rise.mp4" type="video/mp4">
+        </video>
+        <p class="vcap">96-second animation with original soundtrack, "Drifting Apart."</p>
+      </div>
+      <div style="display:grid;gap:16px;min-width:0">
+        <p class="lede">Each dot is a member of the House. Two members are connected when they voted the same way so often that
+          a pair like them is more likely to share a party than not. In 1969, more than a third of those connections still ran
+          between the parties. <strong>In most Congresses since 2003, fewer than one in a hundred have.</strong></p>
+        <ul class="credits">
+          <li>Created by Brian Layman using Claude</li>
+          <li>Inspired by Mauro Martino's award winning graphs</li>
+          <li>And Business Insider animation thereof</li>
+        </ul>
+      </div>
+    </div>
+    <div class="chartbox">
+      <h2>Connections that cross party lines</h2>
+      <p>Share of all agreement connections linking a Democrat and a Republican. Select a point to jump to that Congress.</p>
+      <div class="chartscroll"><svg viewBox="0 0 1000 330" role="img" aria-labelledby="chT chD" class="chart">
+<title id="chT">Share of connections that cross party lines, 81st to 119th Congress</title>
+<desc id="chD">Peaks at 36.3 percent in the 91st Congress (1969) and is about 1 percent or less in most Congresses since the 108th (2003), with a low of 0.3 percent in the 110th and 119th.</desc>
+<line x1="56" x2="984" y1="256.0" y2="256.0" class="g"/><text x="46" y="260.0" class="ax" text-anchor="end">0%</text><line x1="56" x2="984" y1="196.5" y2="196.5" class="g"/><text x="46" y="200.5" class="ax" text-anchor="end">10%</text><line x1="56" x2="984" y1="137.0" y2="137.0" class="g"/><text x="46" y="141.0" class="ax" text-anchor="end">20%</text><line x1="56" x2="984" y1="77.5" y2="77.5" class="g"/><text x="46" y="81.5" class="ax" text-anchor="end">30%</text><line x1="56" x2="984" y1="18.0" y2="18.0" class="g"/><text x="46" y="22.0" class="ax" text-anchor="end">40%</text><polygon points="56.0,256.0 56.0,187.6 80.4,160.2 104.8,185.5 129.3,189.5 153.7,161.5 178.1,175.0 202.5,177.2 226.9,189.6 251.4,134.6 275.8,122.5 300.2,40.2 324.6,69.3 349.1,70.3 373.5,111.0 397.9,91.1 422.3,109.9 446.7,110.4 471.2,158.4 495.6,189.2 520.0,191.4 544.4,180.4 568.8,212.5 593.3,235.3 617.7,224.0 642.1,236.1 666.5,227.5 690.9,233.9 715.4,250.1 739.8,250.3 764.2,254.4 788.6,239.6 813.1,233.6 837.5,253.9 861.9,252.7 886.3,252.1 910.7,252.0 935.2,248.3 959.6,250.4 984.0,254.0 984.0,256.0" class="ar"/><polyline points="56.0,187.6 80.4,160.2 104.8,185.5 129.3,189.5 153.7,161.5 178.1,175.0 202.5,177.2 226.9,189.6 251.4,134.6 275.8,122.5 300.2,40.2 324.6,69.3 349.1,70.3 373.5,111.0 397.9,91.1 422.3,109.9 446.7,110.4 471.2,158.4 495.6,189.2 520.0,191.4 544.4,180.4 568.8,212.5 593.3,235.3 617.7,224.0 642.1,236.1 666.5,227.5 690.9,233.9 715.4,250.1 739.8,250.3 764.2,254.4 788.6,239.6 813.1,233.6 837.5,253.9 861.9,252.7 886.3,252.1 910.7,252.0 935.2,248.3 959.6,250.4 984.0,254.0" class="ln"/><text x="308.2" y="28.2" class="an" text-anchor="start">36.3% · 91st, 1969</text><text x="625.7" y="212.0" class="an" text-anchor="start">Republican Revolution</text><text x="756.2" y="242.4" class="an" text-anchor="end">0.3% · 110th</text><a href="#c81" aria-label="81st Congress, 11.5 percent cross-party"><circle cx="56.0" cy="187.6" r="3.2" class="pt"/><rect x="44.0" y="18" width="24" height="278" class="hit"/></a><a href="#c82" aria-label="82nd Congress, 16.1 percent cross-party"><circle cx="80.4" cy="160.2" r="3.2" class="pt"/><rect x="68.4" y="18" width="24" height="278" class="hit"/></a><a href="#c83" aria-label="83rd Congress, 11.8 percent cross-party"><circle cx="104.8" cy="185.5" r="3.2" class="pt"/><rect x="92.8" y="18" width="24" height="278" class="hit"/></a><a href="#c84" aria-label="84th Congress, 11.2 percent cross-party"><circle cx="129.3" cy="189.5" r="3.2" class="pt"/><rect x="117.3" y="18" width="24" height="278" class="hit"/></a><a href="#c85" aria-label="85th Congress, 15.9 percent cross-party"><circle cx="153.7" cy="161.5" r="3.2" class="pt"/><rect x="141.7" y="18" width="24" height="278" class="hit"/></a><a href="#c86" aria-label="86th Congress, 13.6 percent cross-party"><circle cx="178.1" cy="175.0" r="3.2" class="pt"/><rect x="166.1" y="18" width="24" height="278" class="hit"/></a><a href="#c87" aria-label="87th Congress, 13.3 percent cross-party"><circle cx="202.5" cy="177.2" r="3.2" class="pt"/><rect x="190.5" y="18" width="24" height="278" class="hit"/></a><a href="#c88" aria-label="88th Congress, 11.2 percent cross-party"><circle cx="226.9" cy="189.6" r="3.2" class="pt"/><rect x="214.9" y="18" width="24" height="278" class="hit"/></a><a href="#c89" aria-label="89th Congress, 20.4 percent cross-party"><circle cx="251.4" cy="134.6" r="3.2" class="pt"/><rect x="239.4" y="18" width="24" height="278" class="hit"/></a><a href="#c90" aria-label="90th Congress, 22.4 percent cross-party"><circle cx="275.8" cy="122.5" r="3.2" class="pt"/><rect x="263.8" y="18" width="24" height="278" class="hit"/></a><a href="#c91" aria-label="91st Congress, 36.3 percent cross-party"><circle cx="300.2" cy="40.2" r="6" class="pt hi"/><rect x="288.2" y="18" width="24" height="278" class="hit"/></a><a href="#c92" aria-label="92nd Congress, 31.4 percent cross-party"><circle cx="324.6" cy="69.3" r="3.2" class="pt"/><rect x="312.6" y="18" width="24" height="278" class="hit"/></a><a href="#c93" aria-label="93rd Congress, 31.2 percent cross-party"><circle cx="349.1" cy="70.3" r="3.2" class="pt"/><rect x="337.1" y="18" width="24" height="278" class="hit"/></a><a href="#c94" aria-label="94th Congress, 24.4 percent cross-party"><circle cx="373.5" cy="111.0" r="3.2" class="pt"/><rect x="361.5" y="18" width="24" height="278" class="hit"/></a><a href="#c95" aria-label="95th Congress, 27.7 percent cross-party"><circle cx="397.9" cy="91.1" r="3.2" class="pt"/><rect x="385.9" y="18" width="24" height="278" class="hit"/></a><a href="#c96" aria-label="96th Congress, 24.6 percent cross-party"><circle cx="422.3" cy="109.9" r="3.2" class="pt"/><rect x="410.3" y="18" width="24" height="278" class="hit"/></a><a href="#c97" aria-label="97th Congress, 24.5 percent cross-party"><circle cx="446.7" cy="110.4" r="3.2" class="pt"/><rect x="434.7" y="18" width="24" height="278" class="hit"/></a><a href="#c98" aria-label="98th Congress, 16.4 percent cross-party"><circle cx="471.2" cy="158.4" r="3.2" class="pt"/><rect x="459.2" y="18" width="24" height="278" class="hit"/></a><a href="#c99" aria-label="99th Congress, 11.2 percent cross-party"><circle cx="495.6" cy="189.2" r="3.2" class="pt"/><rect x="483.6" y="18" width="24" height="278" class="hit"/></a><a href="#c100" aria-label="100th Congress, 10.9 percent cross-party"><circle cx="520.0" cy="191.4" r="3.2" class="pt"/><rect x="508.0" y="18" width="24" height="278" class="hit"/></a><a href="#c101" aria-label="101st Congress, 12.7 percent cross-party"><circle cx="544.4" cy="180.4" r="3.2" class="pt"/><rect x="532.4" y="18" width="24" height="278" class="hit"/></a><a href="#c102" aria-label="102nd Congress, 7.3 percent cross-party"><circle cx="568.8" cy="212.5" r="3.2" class="pt"/><rect x="556.8" y="18" width="24" height="278" class="hit"/></a><a href="#c103" aria-label="103rd Congress, 3.5 percent cross-party"><circle cx="593.3" cy="235.3" r="3.2" class="pt"/><rect x="581.3" y="18" width="24" height="278" class="hit"/></a><a href="#c104" aria-label="104th Congress, 5.4 percent cross-party"><circle cx="617.7" cy="224.0" r="6" class="pt hi"/><rect x="605.7" y="18" width="24" height="278" class="hit"/></a><a href="#c105" aria-label="105th Congress, 3.3 percent cross-party"><circle cx="642.1" cy="236.1" r="3.2" class="pt"/><rect x="630.1" y="18" width="24" height="278" class="hit"/></a><a href="#c106" aria-label="106th Congress, 4.8 percent cross-party"><circle cx="666.5" cy="227.5" r="3.2" class="pt"/><rect x="654.5" y="18" width="24" height="278" class="hit"/></a><a href="#c107" aria-label="107th Congress, 3.7 percent cross-party"><circle cx="690.9" cy="233.9" r="3.2" class="pt"/><rect x="678.9" y="18" width="24" height="278" class="hit"/></a><a href="#c108" aria-label="108th Congress, 1.0 percent cross-party"><circle cx="715.4" cy="250.1" r="3.2" class="pt"/><rect x="703.4" y="18" width="24" height="278" class="hit"/></a><a href="#c109" aria-label="109th Congress, 1.0 percent cross-party"><circle cx="739.8" cy="250.3" r="3.2" class="pt"/><rect x="727.8" y="18" width="24" height="278" class="hit"/></a><a href="#c110" aria-label="110th Congress, 0.3 percent cross-party"><circle cx="764.2" cy="254.4" r="6" class="pt hi"/><rect x="752.2" y="18" width="24" height="278" class="hit"/></a><a href="#c111" aria-label="111th Congress, 2.7 percent cross-party"><circle cx="788.6" cy="239.6" r="3.2" class="pt"/><rect x="776.6" y="18" width="24" height="278" class="hit"/></a><a href="#c112" aria-label="112th Congress, 3.8 percent cross-party"><circle cx="813.1" cy="233.6" r="3.2" class="pt"/><rect x="801.1" y="18" width="24" height="278" class="hit"/></a><a href="#c113" aria-label="113th Congress, 0.4 percent cross-party"><circle cx="837.5" cy="253.9" r="3.2" class="pt"/><rect x="825.5" y="18" width="24" height="278" class="hit"/></a><a href="#c114" aria-label="114th Congress, 0.6 percent cross-party"><circle cx="861.9" cy="252.7" r="3.2" class="pt"/><rect x="849.9" y="18" width="24" height="278" class="hit"/></a><a href="#c115" aria-label="115th Congress, 0.6 percent cross-party"><circle cx="886.3" cy="252.1" r="3.2" class="pt"/><rect x="874.3" y="18" width="24" height="278" class="hit"/></a><a href="#c116" aria-label="116th Congress, 0.7 percent cross-party"><circle cx="910.7" cy="252.0" r="3.2" class="pt"/><rect x="898.7" y="18" width="24" height="278" class="hit"/></a><a href="#c117" aria-label="117th Congress, 1.3 percent cross-party"><circle cx="935.2" cy="248.3" r="3.2" class="pt"/><rect x="923.2" y="18" width="24" height="278" class="hit"/></a><a href="#c118" aria-label="118th Congress, 0.9 percent cross-party"><circle cx="959.6" cy="250.4" r="3.2" class="pt"/><rect x="947.6" y="18" width="24" height="278" class="hit"/></a><a href="#c119" aria-label="119th Congress, 0.3 percent cross-party"><circle cx="984.0" cy="254.0" r="6" class="pt hi"/><rect x="972.0" y="18" width="24" height="278" class="hit"/></a><rect x="43.8" y="268" width="24.9" height="12" class="sd"/><rect x="68.2" y="268" width="24.9" height="12" class="sd"/><rect x="92.6" y="268" width="24.9" height="12" class="sr"/><rect x="117.1" y="268" width="24.9" height="12" class="sd"/><rect x="141.5" y="268" width="24.9" height="12" class="sd"/><rect x="165.9" y="268" width="24.9" height="12" class="sd"/><rect x="190.3" y="268" width="24.9" height="12" class="sd"/><rect x="214.7" y="268" width="24.9" height="12" class="sd"/><rect x="239.2" y="268" width="24.9" height="12" class="sd"/><rect x="263.6" y="268" width="24.9" height="12" class="sd"/><rect x="288.0" y="268" width="24.9" height="12" class="sd"/><rect x="312.4" y="268" width="24.9" height="12" class="sd"/><rect x="336.8" y="268" width="24.9" height="12" class="sd"/><rect x="361.3" y="268" width="24.9" height="12" class="sd"/><rect x="385.7" y="268" width="24.9" height="12" class="sd"/><rect x="410.1" y="268" width="24.9" height="12" class="sd"/><rect x="434.5" y="268" width="24.9" height="12" class="sd"/><rect x="458.9" y="268" width="24.9" height="12" class="sd"/><rect x="483.4" y="268" width="24.9" height="12" class="sd"/><rect x="507.8" y="268" width="24.9" height="12" class="sd"/><rect x="532.2" y="268" width="24.9" height="12" class="sd"/><rect x="556.6" y="268" width="24.9" height="12" class="sd"/><rect x="581.1" y="268" width="24.9" height="12" class="sd"/><rect x="605.5" y="268" width="24.9" height="12" class="sr"/><rect x="629.9" y="268" width="24.9" height="12" class="sr"/><rect x="654.3" y="268" width="24.9" height="12" class="sr"/><rect x="678.7" y="268" width="24.9" height="12" class="sr"/><rect x="703.2" y="268" width="24.9" height="12" class="sr"/><rect x="727.6" y="268" width="24.9" height="12" class="sr"/><rect x="752.0" y="268" width="24.9" height="12" class="sd"/><rect x="776.4" y="268" width="24.9" height="12" class="sd"/><rect x="800.8" y="268" width="24.9" height="12" class="sr"/><rect x="825.3" y="268" width="24.9" height="12" class="sr"/><rect x="849.7" y="268" width="24.9" height="12" class="sr"/><rect x="874.1" y="268" width="24.9" height="12" class="sr"/><rect x="898.5" y="268" width="24.9" height="12" class="sd"/><rect x="922.9" y="268" width="24.9" height="12" class="sd"/><rect x="947.4" y="268" width="24.9" height="12" class="sr"/><rect x="971.8" y="268" width="24.9" height="12" class="sr"/>
+<text x="984" y="264" class="ax" text-anchor="end">House majority</text><text x="56.0" y="300" class="ax" text-anchor="middle">1949</text><text x="202.5" y="300" class="ax" text-anchor="middle">1961</text><text x="349.1" y="300" class="ax" text-anchor="middle">1973</text><text x="495.6" y="300" class="ax" text-anchor="middle">1985</text><text x="642.1" y="300" class="ax" text-anchor="middle">1997</text><text x="788.6" y="300" class="ax" text-anchor="middle">2009</text><text x="935.2" y="300" class="ax" text-anchor="middle">2021</text><text x="984.0" y="300" class="ax" text-anchor="middle">2025</text></svg></div>
+      <div class="legend"><span><i style="background:var(--dem)"></i>Democratic House</span><span><i style="background:var(--rep)"></i>Republican House</span></div>
+    </div>
+  </section>
+</div>
+
+<nav class="index" aria-label="Jump to a Congress"><div class="wrap"><div class="strip" id="strip"><a href="#c81" class="chip d" data-c="81"><b>81</b><span>1949</span></a><a href="#c82" class="chip d" data-c="82"><b>82</b><span>1951</span></a><a href="#c83" class="chip r" data-c="83"><b>83</b><span>1953</span></a><a href="#c84" class="chip d" data-c="84"><b>84</b><span>1955</span></a><a href="#c85" class="chip d" data-c="85"><b>85</b><span>1957</span></a><a href="#c86" class="chip d" data-c="86"><b>86</b><span>1959</span></a><a href="#c87" class="chip d" data-c="87"><b>87</b><span>1961</span></a><a href="#c88" class="chip d" data-c="88"><b>88</b><span>1963</span></a><a href="#c89" class="chip d" data-c="89"><b>89</b><span>1965</span></a><a href="#c90" class="chip d" data-c="90"><b>90</b><span>1967</span></a><a href="#c91" class="chip d" data-c="91"><b>91</b><span>1969</span></a><a href="#c92" class="chip d" data-c="92"><b>92</b><span>1971</span></a><a href="#c93" class="chip d" data-c="93"><b>93</b><span>1973</span></a><a href="#c94" class="chip d" data-c="94"><b>94</b><span>1975</span></a><a href="#c95" class="chip d" data-c="95"><b>95</b><span>1977</span></a><a href="#c96" class="chip d" data-c="96"><b>96</b><span>1979</span></a><a href="#c97" class="chip d" data-c="97"><b>97</b><span>1981</span></a><a href="#c98" class="chip d" data-c="98"><b>98</b><span>1983</span></a><a href="#c99" class="chip d" data-c="99"><b>99</b><span>1985</span></a><a href="#c100" class="chip d" data-c="100"><b>100</b><span>1987</span></a><a href="#c101" class="chip d" data-c="101"><b>101</b><span>1989</span></a><a href="#c102" class="chip d" data-c="102"><b>102</b><span>1991</span></a><a href="#c103" class="chip d" data-c="103"><b>103</b><span>1993</span></a><a href="#c104" class="chip r" data-c="104"><b>104</b><span>1995</span></a><a href="#c105" class="chip r" data-c="105"><b>105</b><span>1997</span></a><a href="#c106" class="chip r" data-c="106"><b>106</b><span>1999</span></a><a href="#c107" class="chip r" data-c="107"><b>107</b><span>2001</span></a><a href="#c108" class="chip r" data-c="108"><b>108</b><span>2003</span></a><a href="#c109" class="chip r" data-c="109"><b>109</b><span>2005</span></a><a href="#c110" class="chip d" data-c="110"><b>110</b><span>2007</span></a><a href="#c111" class="chip d" data-c="111"><b>111</b><span>2009</span></a><a href="#c112" class="chip r" data-c="112"><b>112</b><span>2011</span></a><a href="#c113" class="chip r" data-c="113"><b>113</b><span>2013</span></a><a href="#c114" class="chip r" data-c="114"><b>114</b><span>2015</span></a><a href="#c115" class="chip r" data-c="115"><b>115</b><span>2017</span></a><a href="#c116" class="chip d" data-c="116"><b>116</b><span>2019</span></a><a href="#c117" class="chip d" data-c="117"><b>117</b><span>2021</span></a><a href="#c118" class="chip r" data-c="118"><b>118</b><span>2023</span></a><a href="#c119" class="chip r" data-c="119"><b>119</b><span>2025</span></a></div></div></nav>
+
+<main class="wrap list">
+
+<article class="cong" id="c81" aria-labelledby="h81">
+  <figure class="slide"><img src="img/c81.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 81st Congress: 42,826 connections, 11.5 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h81"><span class="num">81<sup>st</sup></span> Congress</h2>
+      <p class="yrs">1949–1951</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Harry S. Truman (D)</dd></div>
+      <div><dt>Speaker</dt><dd>Sam Rayburn (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:60.3%"></i><i class="br" style="width:39.4%"></i></span>
+        <span class="sn"><span class="dn">263 D</span> · <span class="rn">172 R</span> · 1 other · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">275</span> roll calls · threshold <span class="mono">155</span> agreements · <strong class="mono">11.5%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>1948: Truman&#x27;s upset win; Democrats gain about 75 House seats</li><li>Fair Deal agenda</li><li>Korean War begins, June 1950</li></ul>
+    <p class="story">Truman&#x27;s surprise 1948 victory swept Democrats back into control after two years of Republican rule. The Democratic majority was itself divided: Southern Democrats often voted with Republicans as the &quot;conservative coalition,&quot; blocking civil rights and much of Truman&#x27;s Fair Deal. That cross-cutting alliance is why so many connections in this graph run between the two clusters.</p>
+  </div>
+</article>
+
+<article class="cong" id="c82" aria-labelledby="h82">
+  <figure class="slide"><img src="img/c82.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 82nd Congress: 41,146 connections, 16.1 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h82"><span class="num">82<sup>nd</sup></span> Congress</h2>
+      <p class="yrs">1951–1953</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Harry S. Truman (D)</dd></div>
+      <div><dt>Speaker</dt><dd>Sam Rayburn (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:54.0%"></i><i class="br" style="width:45.8%"></i></span>
+        <span class="sn"><span class="dn">236 D</span> · <span class="rn">200 R</span> · 1 other · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">181</span> roll calls · threshold <span class="mono">103</span> agreements · <strong class="mono">16.1%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>1950 midterms: Democrats lose 28 seats</li><li>Truman fires MacArthur, April 1951</li><li>Korean War stalemate</li></ul>
+    <p class="story">Democrats kept the House but with a thinner margin after the 1950 midterms, fought amid the Korean War and the rise of Senator Joseph McCarthy. Anti-communism, war spending and price controls dominated the agenda. Cross-party agreement stayed high because the conservative coalition of Republicans and Southern Democrats decided many close votes.</p>
+  </div>
+</article>
+
+<article class="cong" id="c83" aria-labelledby="h83">
+  <figure class="slide"><img src="img/c83.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 83rd Congress: 40,481 connections, 11.8 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h83"><span class="num">83<sup>rd</sup></span> Congress</h2>
+      <p class="yrs">1953–1955</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Dwight D. Eisenhower (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Joseph W. Martin Jr. (R)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:49.1%"></i><i class="br" style="width:50.7%"></i></span>
+        <span class="sn"><span class="dn">214 D</span> · <span class="rn">221 R</span> · 1 other · Republican majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">147</span> roll calls · threshold <span class="mono">89</span> agreements · <strong class="mono">11.8%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>1952: Eisenhower landslide gives Republicans unified control</li><li>Korean armistice, July 1953</li><li>Army–McCarthy hearings, 1954</li></ul>
+    <p class="story">Eisenhower&#x27;s coattails gave Republicans a narrow House majority and unified government for the first time since 1931. Eisenhower governed as a moderate, often needing Democratic votes to pass his program over objections from his own party&#x27;s right wing. It was the last Republican House for 40 years.</p>
+  </div>
+</article>
+
+<article class="cong" id="c84" aria-labelledby="h84">
+  <figure class="slide"><img src="img/c84.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 84th Congress: 43,654 connections, 11.2 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h84"><span class="num">84<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1955–1957</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Dwight D. Eisenhower (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Sam Rayburn (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:53.3%"></i><i class="br" style="width:46.7%"></i></span>
+        <span class="sn"><span class="dn">232 D</span> · <span class="rn">203 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">149</span> roll calls · threshold <span class="mono">91</span> agreements · <strong class="mono">11.2%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>1954 midterms: Democrats retake the House</li><li>Federal-Aid Highway Act (Interstate system), 1956</li><li>Southern Manifesto against Brown v. Board, 1956</li></ul>
+    <p class="story">Democrats regained the House in 1954 and would hold it until 1995. Speaker Rayburn and Senate leader Lyndon Johnson cooperated with Eisenhower on major bipartisan projects like the Interstate Highway System. The Southern Manifesto, signed by most Southern members, showed how civil rights split the Democratic caucus.</p>
+  </div>
+</article>
+
+<article class="cong" id="c85" aria-labelledby="h85">
+  <figure class="slide"><img src="img/c85.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 85th Congress: 39,721 connections, 15.9 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h85"><span class="num">85<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1957–1959</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Dwight D. Eisenhower (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Sam Rayburn (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:53.8%"></i><i class="br" style="width:46.2%"></i></span>
+        <span class="sn"><span class="dn">233 D</span> · <span class="rn">200 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">193</span> roll calls · threshold <span class="mono">113</span> agreements · <strong class="mono">15.9%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Civil Rights Act of 1957, first since Reconstruction</li><li>Sputnik launch, October 1957</li><li>National Defense Education Act, 1958</li></ul>
+    <p class="story">Divided government continued after Eisenhower&#x27;s 1956 re-election. Congress passed the first civil rights law since Reconstruction, though Southern opposition weakened it. Sputnik prompted bipartisan spending on science, education and the new NASA.</p>
+  </div>
+</article>
+
+<article class="cong" id="c86" aria-labelledby="h86">
+  <figure class="slide"><img src="img/c86.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 86th Congress: 45,565 connections, 13.6 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h86"><span class="num">86<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1959–1961</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Dwight D. Eisenhower (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Sam Rayburn (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:64.6%"></i><i class="br" style="width:35.2%"></i></span>
+        <span class="sn"><span class="dn">283 D</span> · <span class="rn">154 R</span> · 1 other · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">180</span> roll calls · threshold <span class="mono">103</span> agreements · <strong class="mono">13.6%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>1958 recession midterms: Democrats gain nearly 50 seats</li><li>Alaska and Hawaii admitted, 1959</li><li>Landrum–Griffin labor law, 1959; Civil Rights Act of 1960</li></ul>
+    <p class="story">A recession produced a Democratic landslide in 1958, bringing in a class of younger Northern liberals. Even with a lopsided majority, Democrats struggled to pass liberal legislation because the conservative coalition still controlled the Rules Committee and many floor votes.</p>
+  </div>
+</article>
+
+<article class="cong" id="c87" aria-labelledby="h87">
+  <figure class="slide"><img src="img/c87.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 87th Congress: 41,707 connections, 13.3 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h87"><span class="num">87<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1961–1963</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>John F. Kennedy (D)</dd></div>
+      <div><dt>Speaker</dt><dd>Sam Rayburn (D), then John W. McCormack (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:60.0%"></i><i class="br" style="width:40.0%"></i></span>
+        <span class="sn"><span class="dn">263 D</span> · <span class="rn">175 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">240</span> roll calls · threshold <span class="mono">145</span> agreements · <strong class="mono">13.3%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Rules Committee expanded to break the conservative bloc, 1961</li><li>Rayburn dies, November 1961</li><li>Cuban Missile Crisis, October 1962</li></ul>
+    <p class="story">Kennedy&#x27;s narrow 1960 win cost Democrats seats in the House. Rayburn&#x27;s last major fight was enlarging the Rules Committee so Kennedy&#x27;s bills could reach the floor, won by just five votes. Much of the New Frontier still stalled in the face of the Republican–Southern Democratic coalition.</p>
+  </div>
+</article>
+
+<article class="cong" id="c88" aria-labelledby="h88">
+  <figure class="slide"><img src="img/c88.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 88th Congress: 40,209 connections, 11.2 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h88"><span class="num">88<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1963–1965</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>John F. Kennedy (D), then Lyndon B. Johnson (D)</dd></div>
+      <div><dt>Speaker</dt><dd>John W. McCormack (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:59.3%"></i><i class="br" style="width:40.7%"></i></span>
+        <span class="sn"><span class="dn">258 D</span> · <span class="rn">177 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">232</span> roll calls · threshold <span class="mono">139</span> agreements · <strong class="mono">11.2%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Kennedy assassinated, November 1963</li><li>Civil Rights Act of 1964</li><li>Gulf of Tonkin Resolution, 1964</li></ul>
+    <p class="story">After Kennedy&#x27;s assassination, Johnson pushed his agenda through. The Civil Rights Act of 1964 passed the House with a larger share of Republicans than Democrats voting yes, while most Southern Democrats voted no. Party lines and ideological lines still did not match.</p>
+  </div>
+</article>
+
+<article class="cong" id="c89" aria-labelledby="h89">
+  <figure class="slide"><img src="img/c89.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 89th Congress: 43,093 connections, 20.4 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h89"><span class="num">89<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1965–1967</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Lyndon B. Johnson (D)</dd></div>
+      <div><dt>Speaker</dt><dd>John W. McCormack (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:67.8%"></i><i class="br" style="width:32.2%"></i></span>
+        <span class="sn"><span class="dn">295 D</span> · <span class="rn">140 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">394</span> roll calls · threshold <span class="mono">205</span> agreements · <strong class="mono">20.4%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>1964 landslide: Democrats hold about 295 seats</li><li>Voting Rights Act, Medicare and Medicaid, 1965</li><li>Immigration and Nationality Act, 1965</li></ul>
+    <p class="story">Johnson&#x27;s landslide over Barry Goldwater produced one of the largest Democratic majorities in history. This &quot;Great Society&quot; Congress passed the Voting Rights Act, Medicare, Medicaid, federal aid to education and immigration reform in a burst of lawmaking. Goldwater&#x27;s 1964 wins in the Deep South hinted at the coming regional realignment.</p>
+  </div>
+</article>
+
+<article class="cong" id="c90" aria-labelledby="h90">
+  <figure class="slide"><img src="img/c90.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 90th Congress: 38,386 connections, 22.4 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h90"><span class="num">90<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1967–1969</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Lyndon B. Johnson (D)</dd></div>
+      <div><dt>Speaker</dt><dd>John W. McCormack (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:56.8%"></i><i class="br" style="width:43.2%"></i></span>
+        <span class="sn"><span class="dn">246 D</span> · <span class="rn">187 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">478</span> roll calls · threshold <span class="mono">294</span> agreements · <strong class="mono">22.4%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>1966 midterms: Republicans gain 47 seats</li><li>Vietnam War escalates; Tet Offensive, 1968</li><li>Fair Housing Act, 1968</li></ul>
+    <p class="story">Republicans rebounded in 1966 amid backlash over Vietnam, urban unrest and the pace of the Great Society. 1968 brought the assassinations of Martin Luther King Jr. and Robert Kennedy and Johnson&#x27;s decision not to seek re-election. The war divided both parties internally, keeping cross-party voting common.</p>
+  </div>
+</article>
+
+<article class="cong" id="c91" aria-labelledby="h91">
+  <figure class="slide"><img src="img/c91.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 91st Congress: 35,283 connections, 36.3 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h91"><span class="num">91<sup>st</sup></span> Congress</h2>
+      <p class="yrs">1969–1971</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Richard Nixon (R)</dd></div>
+      <div><dt>Speaker</dt><dd>John W. McCormack (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:55.9%"></i><i class="br" style="width:44.1%"></i></span>
+        <span class="sn"><span class="dn">245 D</span> · <span class="rn">193 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">443</span> roll calls · threshold <span class="mono">246</span> agreements · <strong class="mono">36.3%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Divided government under Nixon</li><li>National Environmental Policy Act, 1969; Clean Air Act, 1970</li><li>Cambodia incursion and Kent State, 1970</li></ul>
+    <p class="story">Nixon faced a Democratic Congress, and the two sides found common ground on major environmental laws and the creation of the EPA. In this analysis, the 91st has the highest share of cross-party connections of any Congress, about 36 percent, a high point for voting across party lines.</p>
+  </div>
+</article>
+
+<article class="cong" id="c92" aria-labelledby="h92">
+  <figure class="slide"><img src="img/c92.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 92nd Congress: 37,274 connections, 31.4 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h92"><span class="num">92<sup>nd</sup></span> Congress</h2>
+      <p class="yrs">1971–1973</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Richard Nixon (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Carl Albert (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:58.5%"></i><i class="br" style="width:41.5%"></i></span>
+        <span class="sn"><span class="dn">254 D</span> · <span class="rn">180 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">649</span> roll calls · threshold <span class="mono">349</span> agreements · <strong class="mono">31.4%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>26th Amendment lowers voting age to 18, 1971</li><li>Equal Rights Amendment passes Congress; Title IX, 1972</li><li>Clean Water Act passed over Nixon&#x27;s veto, 1972</li></ul>
+    <p class="story">Carl Albert became Speaker. Congress passed the Equal Rights Amendment and Title IX with broad bipartisan support, and overrode Nixon&#x27;s veto of the Clean Water Act. Nixon&#x27;s 1972 landslide did little to change the House, which stayed firmly Democratic.</p>
+  </div>
+</article>
+
+<article class="cong" id="c93" aria-labelledby="h93">
+  <figure class="slide"><img src="img/c93.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 93rd Congress: 41,661 connections, 31.2 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h93"><span class="num">93<sup>rd</sup></span> Congress</h2>
+      <p class="yrs">1973–1975</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Richard Nixon (R), then Gerald Ford (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Carl Albert (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:55.6%"></i><i class="br" style="width:44.2%"></i></span>
+        <span class="sn"><span class="dn">244 D</span> · <span class="rn">194 R</span> · 1 other · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,078</span> roll calls · threshold <span class="mono">608</span> agreements · <strong class="mono">31.2%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Electronic voting begins in the House, January 1973</li><li>War Powers Resolution over Nixon&#x27;s veto, 1973</li><li>Watergate; Nixon resigns, August 1974</li></ul>
+    <p class="story">Watergate consumed this Congress. The House Judiciary Committee approved articles of impeachment with some Republican support before Nixon resigned. The House also switched to electronic voting in 1973, so recorded roll calls more than doubled. That is why the graphs from here on draw on many more votes.</p>
+  </div>
+</article>
+
+<article class="cong" id="c94" aria-labelledby="h94">
+  <figure class="slide"><img src="img/c94.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 94th Congress: 45,812 connections, 24.4 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h94"><span class="num">94<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1975–1977</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Gerald Ford (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Carl Albert (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:66.7%"></i><i class="br" style="width:33.3%"></i></span>
+        <span class="sn"><span class="dn">290 D</span> · <span class="rn">145 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,273</span> roll calls · threshold <span class="mono">714</span> agreements · <strong class="mono">24.4%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>1974 &quot;Watergate babies&quot;: Democrats gain 49 seats</li><li>Three senior committee chairs ousted</li><li>Fall of Saigon, April 1975</li></ul>
+    <p class="story">The post-Watergate election brought in 75 new Democrats who weakened the seniority system and removed three long-serving Southern committee chairs. These reforms shifted power toward the party caucus and its leadership, one of the structural changes that later made stronger party discipline possible.</p>
+  </div>
+</article>
+
+<article class="cong" id="c95" aria-labelledby="h95">
+  <figure class="slide"><img src="img/c95.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 95th Congress: 48,498 connections, 27.7 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h95"><span class="num">95<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1977–1979</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Jimmy Carter (D)</dd></div>
+      <div><dt>Speaker</dt><dd>Tip O&#x27;Neill (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:67.0%"></i><i class="br" style="width:33.0%"></i></span>
+        <span class="sn"><span class="dn">292 D</span> · <span class="rn">144 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,540</span> roll calls · threshold <span class="mono">884</span> agreements · <strong class="mono">27.7%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Unified Democratic government</li><li>Department of Energy created, 1977</li><li>Ethics reforms and Humphrey–Hawkins Act, 1978</li></ul>
+    <p class="story">Tip O&#x27;Neill became Speaker with a Democrat in the White House. Even with large majorities, Carter often struggled with his own party in Congress on energy policy and spending. Cross-party coalitions remained routine.</p>
+  </div>
+</article>
+
+<article class="cong" id="c96" aria-labelledby="h96">
+  <figure class="slide"><img src="img/c96.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 96th Congress: 48,135 connections, 24.6 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h96"><span class="num">96<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1979–1981</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Jimmy Carter (D)</dd></div>
+      <div><dt>Speaker</dt><dd>Tip O&#x27;Neill (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:63.7%"></i><i class="br" style="width:36.3%"></i></span>
+        <span class="sn"><span class="dn">276 D</span> · <span class="rn">157 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,276</span> roll calls · threshold <span class="mono">701</span> agreements · <strong class="mono">24.6%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Inflation and energy crisis</li><li>Chrysler loan guarantees, 1979</li><li>Iran hostage crisis begins, November 1979</li></ul>
+    <p class="story">High inflation, gas lines and the Iran hostage crisis eroded confidence in Carter and the Democratic Congress. The 1980 election swept Reagan into office and gave Republicans the Senate, setting up a new kind of divided government.</p>
+  </div>
+</article>
+
+<article class="cong" id="c97" aria-labelledby="h97">
+  <figure class="slide"><img src="img/c97.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 97th Congress: 39,504 connections, 24.5 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h97"><span class="num">97<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1981–1983</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Ronald Reagan (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Tip O&#x27;Neill (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:55.2%"></i><i class="br" style="width:44.6%"></i></span>
+        <span class="sn"><span class="dn">239 D</span> · <span class="rn">193 R</span> · 1 other · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">812</span> roll calls · threshold <span class="mono">489</span> agreements · <strong class="mono">24.5%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Reagan elected; Republicans win the Senate</li><li>&quot;Boll Weevil&quot; Southern Democrats back Reagan&#x27;s budget and tax cuts, 1981</li><li>1982 recession</li></ul>
+    <p class="story">Democrats still held the House, but dozens of conservative Southern &quot;Boll Weevil&quot; Democrats joined Republicans to pass Reagan&#x27;s 1981 budget and tax cuts. It was one of the last great displays of the old cross-party conservative coalition.</p>
+  </div>
+</article>
+
+<article class="cong" id="c98" aria-labelledby="h98">
+  <figure class="slide"><img src="img/c98.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 98th Congress: 48,028 connections, 16.4 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h98"><span class="num">98<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1983–1985</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Ronald Reagan (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Tip O&#x27;Neill (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:61.8%"></i><i class="br" style="width:38.2%"></i></span>
+        <span class="sn"><span class="dn">268 D</span> · <span class="rn">166 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">906</span> roll calls · threshold <span class="mono">523</span> agreements · <strong class="mono">16.4%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>1982 midterms: Democrats gain 26 seats</li><li>Bipartisan Social Security rescue, 1983</li><li>Martin Luther King Jr. Day established, 1983</li></ul>
+    <p class="story">Recession-driven Democratic gains strengthened O&#x27;Neill&#x27;s hand. The bipartisan Social Security fix of 1983 showed divided government could still make big deals. In the graph the two clusters start pulling apart as Southern conservatives increasingly shift toward the GOP.</p>
+  </div>
+</article>
+
+<article class="cong" id="c99" aria-labelledby="h99">
+  <figure class="slide"><img src="img/c99.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 99th Congress: 46,136 connections, 11.2 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h99"><span class="num">99<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1985–1987</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Ronald Reagan (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Tip O&#x27;Neill (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:58.1%"></i><i class="br" style="width:41.9%"></i></span>
+        <span class="sn"><span class="dn">252 D</span> · <span class="rn">182 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">890</span> roll calls · threshold <span class="mono">516</span> agreements · <strong class="mono">11.2%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Reagan&#x27;s 49-state re-election, 1984</li><li>Gramm–Rudman–Hollings deficit law, 1985</li><li>Tax Reform Act of 1986; Iran–Contra revealed</li></ul>
+    <p class="story">The Tax Reform Act of 1986 was a major bipartisan achievement, but floor fights were growing sharper. Younger Republicans led by Newt Gingrich, frustrated by decades in the minority, began using televised House proceedings to confront the Democratic majority.</p>
+  </div>
+</article>
+
+<article class="cong" id="c100" aria-labelledby="h100">
+  <figure class="slide"><img src="img/c100.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 100th Congress: 46,116 connections, 10.9 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h100"><span class="num">100<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1987–1989</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Ronald Reagan (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Jim Wright (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:59.3%"></i><i class="br" style="width:40.7%"></i></span>
+        <span class="sn"><span class="dn">258 D</span> · <span class="rn">177 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">939</span> roll calls · threshold <span class="mono">566</span> agreements · <strong class="mono">10.9%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Jim Wright becomes Speaker</li><li>Iran–Contra hearings, 1987</li><li>Civil Rights Restoration Act passed over Reagan&#x27;s veto, 1988</li></ul>
+    <p class="story">Speaker Jim Wright ran the House more aggressively than O&#x27;Neill, using tight procedural control that angered Republicans. Gingrich filed ethics charges against Wright in 1988. The fight marked a turn toward the confrontational style that defines the modern House.</p>
+  </div>
+</article>
+
+<article class="cong" id="c101" aria-labelledby="h101">
+  <figure class="slide"><img src="img/c101.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 101st Congress: 47,650 connections, 12.7 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h101"><span class="num">101<sup>st</sup></span> Congress</h2>
+      <p class="yrs">1989–1991</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>George H. W. Bush (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Jim Wright (D), then Tom Foley (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:59.5%"></i><i class="br" style="width:40.5%"></i></span>
+        <span class="sn"><span class="dn">259 D</span> · <span class="rn">176 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">879</span> roll calls · threshold <span class="mono">537</span> agreements · <strong class="mono">12.7%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Wright resigns amid ethics charges, June 1989</li><li>Americans with Disabilities Act, 1990</li><li>1990 budget deal breaks &quot;no new taxes&quot;</li></ul>
+    <p class="story">Wright&#x27;s resignation brought in Tom Foley, a conciliatory Speaker. When Bush agreed to a 1990 budget deal with tax increases, Gingrich and most House Republicans voted against their own president. Party identity was starting to mean opposition to the other side&#x27;s leadership.</p>
+  </div>
+</article>
+
+<article class="cong" id="c102" aria-labelledby="h102">
+  <figure class="slide"><img src="img/c102.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 102nd Congress: 48,734 connections, 7.3 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h102"><span class="num">102<sup>nd</sup></span> Congress</h2>
+      <p class="yrs">1991–1993</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>George H. W. Bush (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Tom Foley (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:61.4%"></i><i class="br" style="width:38.4%"></i></span>
+        <span class="sn"><span class="dn">267 D</span> · <span class="rn">167 R</span> · 1 other · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">901</span> roll calls · threshold <span class="mono">515</span> agreements · <strong class="mono">7.3%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Gulf War authorization, January 1991</li><li>House bank and post office scandals, 1991–92</li><li>Record retirements before the 1992 election</li></ul>
+    <p class="story">The House banking scandal, in which members overdrew accounts without penalty, badly damaged the institution&#x27;s reputation and the long-serving Democratic majority. In the graph, cross-party connections fall to about 7 percent and the two parties form clearly separate clusters for the first time.</p>
+  </div>
+</article>
+
+<article class="cong" id="c103" aria-labelledby="h103">
+  <figure class="slide"><img src="img/c103.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 103rd Congress: 47,802 connections, 3.5 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h103"><span class="num">103<sup>rd</sup></span> Congress</h2>
+      <p class="yrs">1993–1995</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Bill Clinton (D)</dd></div>
+      <div><dt>Speaker</dt><dd>Tom Foley (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:59.2%"></i><i class="br" style="width:40.6%"></i></span>
+        <span class="sn"><span class="dn">257 D</span> · <span class="rn">176 R</span> · 1 other · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,094</span> roll calls · threshold <span class="mono">619</span> agreements · <strong class="mono">3.5%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Clinton&#x27;s 1993 budget passes with zero Republican votes</li><li>NAFTA passes with mostly Republican support, 1993</li><li>Health care reform fails; Contract with America unveiled, September 1994</li></ul>
+    <p class="story">Unified Democratic government lasted just two years. Clinton&#x27;s budget passed without a single Republican vote, and his health care plan collapsed. In September 1994, Gingrich and over 300 Republican candidates signed the Contract with America, turning the midterm into a national referendum. Cross-party connections fall to 3.5 percent.</p>
+  </div>
+</article>
+
+<article class="cong" id="c104" aria-labelledby="h104">
+  <figure class="slide"><img src="img/c104.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 104th Congress: 45,479 connections, 5.4 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h104"><span class="num">104<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1995–1997</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Bill Clinton (D)</dd></div>
+      <div><dt>Speaker</dt><dd>Newt Gingrich (R)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:46.9%"></i><i class="br" style="width:52.9%"></i></span>
+        <span class="sn"><span class="dn">204 D</span> · <span class="rn">230 R</span> · 1 other · Republican majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,321</span> roll calls · threshold <span class="mono">754</span> agreements · <strong class="mono">5.4%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>1994 &quot;Republican Revolution&quot;: GOP gains 54 seats</li><li>Contract with America votes in the first 100 days</li><li>Government shutdowns 1995–96; welfare reform, 1996</li></ul>
+    <p class="story">This is the Congress the Contract with America created. Republicans won the House for the first time in 40 years, and Gingrich brought nearly every Contract item to a floor vote within 100 days. He centralized power in the Speaker&#x27;s office. Budget standoffs with Clinton led to two government shutdowns before the sides agreed on welfare reform. Many conservative Southern Democratic seats turned Republican, so each party became more uniform.</p>
+  </div>
+</article>
+
+<article class="cong" id="c105" aria-labelledby="h105">
+  <figure class="slide"><img src="img/c105.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 105th Congress: 44,540 connections, 3.3 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h105"><span class="num">105<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1997–1999</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Bill Clinton (D)</dd></div>
+      <div><dt>Speaker</dt><dd>Newt Gingrich (R)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:47.6%"></i><i class="br" style="width:52.2%"></i></span>
+        <span class="sn"><span class="dn">207 D</span> · <span class="rn">227 R</span> · 1 other · Republican majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,166</span> roll calls · threshold <span class="mono">748</span> agreements · <strong class="mono">3.3%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Balanced Budget Act, 1997</li><li>Failed internal coup against Gingrich, 1997</li><li>Lewinsky scandal; Clinton impeached, December 1998</li></ul>
+    <p class="story">Clinton and Republicans struck a balanced-budget deal, but the Lewinsky scandal dominated 1998. Democrats unexpectedly gained seats in the midterms, and Gingrich resigned. In December, the outgoing House impeached Clinton on largely party-line votes.</p>
+  </div>
+</article>
+
+<article class="cong" id="c106" aria-labelledby="h106">
+  <figure class="slide"><img src="img/c106.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 106th Congress: 44,911 connections, 4.8 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h106"><span class="num">106<sup>th</sup></span> Congress</h2>
+      <p class="yrs">1999–2001</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Bill Clinton (D)</dd></div>
+      <div><dt>Speaker</dt><dd>Dennis Hastert (R)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:48.5%"></i><i class="br" style="width:51.3%"></i></span>
+        <span class="sn"><span class="dn">211 D</span> · <span class="rn">223 R</span> · 1 other · Republican majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,209</span> roll calls · threshold <span class="mono">785</span> agreements · <strong class="mono">4.8%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Senate acquits Clinton, February 1999</li><li>Gramm–Leach–Bliley financial deregulation, 1999</li><li>2000 election decided by Bush v. Gore</li></ul>
+    <p class="story">Bob Livingston, chosen to succeed Gingrich, withdrew over his own scandal, and Dennis Hastert became Speaker with one of the narrowest majorities in decades. Hastert&#x27;s informal &quot;majority of the majority&quot; rule, under which bills reach the floor only with support from most Republicans, made the minority party less relevant on the floor. This was the third Republican House in a row, the lasting result of the 1994 Contract with America election.</p>
+  </div>
+</article>
+
+<article class="cong" id="c107" aria-labelledby="h107">
+  <figure class="slide"><img src="img/c107.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 107th Congress: 44,599 connections, 3.7 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h107"><span class="num">107<sup>th</sup></span> Congress</h2>
+      <p class="yrs">2001–2003</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>George W. Bush (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Dennis Hastert (R)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:48.6%"></i><i class="br" style="width:50.9%"></i></span>
+        <span class="sn"><span class="dn">211 D</span> · <span class="rn">221 R</span> · 2 other · Republican majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">990</span> roll calls · threshold <span class="mono">661</span> agreements · <strong class="mono">3.7%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>September 11 attacks; Authorization for Use of Military Force, 2001</li><li>No Child Left Behind, bipartisan, 2001</li><li>Iraq war authorization, October 2002</li></ul>
+    <p class="story">The 9/11 attacks briefly produced near-unanimity: the House passed the use-of-force resolution with one dissenting vote. No Child Left Behind passed with broad support from both parties. By the 2002 Iraq vote, partisan divisions had returned, though many Democrats supported the war resolution.</p>
+  </div>
+</article>
+
+<article class="cong" id="c108" aria-labelledby="h108">
+  <figure class="slide"><img src="img/c108.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 108th Congress: 45,510 connections, 1.0 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h108"><span class="num">108<sup>th</sup></span> Congress</h2>
+      <p class="yrs">2003–2005</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>George W. Bush (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Dennis Hastert (R)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:47.1%"></i><i class="br" style="width:52.6%"></i></span>
+        <span class="sn"><span class="dn">205 D</span> · <span class="rn">229 R</span> · 1 other · Republican majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,218</span> roll calls · threshold <span class="mono">779</span> agreements · <strong class="mono">1.0%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Medicare prescription drug vote held open for about three hours, 2003</li><li>Texas mid-decade redistricting, 2003</li><li>Bush re-elected, 2004</li></ul>
+    <p class="story">Republican leaders kept the 2003 Medicare drug-benefit vote open for hours to turn a losing tally into a win. Majority Leader Tom DeLay engineered an unusual mid-decade redrawing of Texas districts. Cross-party connections drop to about 1 percent.</p>
+  </div>
+</article>
+
+<article class="cong" id="c109" aria-labelledby="h109">
+  <figure class="slide"><img src="img/c109.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 109th Congress: 45,550 connections, 1.0 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h109"><span class="num">109<sup>th</sup></span> Congress</h2>
+      <p class="yrs">2005–2007</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>George W. Bush (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Dennis Hastert (R)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:46.3%"></i><i class="br" style="width:53.5%"></i></span>
+        <span class="sn"><span class="dn">201 D</span> · <span class="rn">232 R</span> · 1 other · Republican majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,210</span> roll calls · threshold <span class="mono">771</span> agreements · <strong class="mono">1.0%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Social Security private-accounts plan stalls, 2005</li><li>Hurricane Katrina, August 2005</li><li>DeLay indicted and resigns; Abramoff and Foley scandals, 2006</li></ul>
+    <p class="story">Bush&#x27;s second-term agenda stalled, and the botched response to Hurricane Katrina and an unpopular Iraq war dragged on the GOP. Lobbying and ethics scandals helped set up the 2006 Democratic wave. This is the Congress for which the original study reported its 766-agreement threshold; this update calculates 771.</p>
+  </div>
+</article>
+
+<article class="cong" id="c110" aria-labelledby="h110">
+  <figure class="slide"><img src="img/c110.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 110th Congress: 44,242 connections, 0.3 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h110"><span class="num">110<sup>th</sup></span> Congress</h2>
+      <p class="yrs">2007–2009</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>George W. Bush (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Nancy Pelosi (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:53.6%"></i><i class="br" style="width:46.4%"></i></span>
+        <span class="sn"><span class="dn">233 D</span> · <span class="rn">202 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,865</span> roll calls · threshold <span class="mono">1135</span> agreements · <strong class="mono">0.3%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>2006 midterms: Democrats gain 31 seats</li><li>Nancy Pelosi becomes first woman Speaker</li><li>Financial crisis; TARP fails, then passes, fall 2008</li></ul>
+    <p class="story">Democrats retook the House on opposition to the Iraq war and Republican scandals. The 2008 financial crisis forced unusual coalitions: the TARP bank rescue failed on its first vote and passed days later. In the network, cross-party connections fall to about 0.3 percent, the lowest in this record. Only the 119th comes close.</p>
+  </div>
+</article>
+
+<article class="cong" id="c111" aria-labelledby="h111">
+  <figure class="slide"><img src="img/c111.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 111th Congress: 46,265 connections, 2.7 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h111"><span class="num">111<sup>th</sup></span> Congress</h2>
+      <p class="yrs">2009–2011</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Barack Obama (D)</dd></div>
+      <div><dt>Speaker</dt><dd>Nancy Pelosi (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:59.0%"></i><i class="br" style="width:41.0%"></i></span>
+        <span class="sn"><span class="dn">256 D</span> · <span class="rn">178 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,647</span> roll calls · threshold <span class="mono">1092</span> agreements · <strong class="mono">2.7%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Stimulus package passes with no House Republican votes, 2009</li><li>Affordable Care Act, 2010</li><li>Dodd–Frank financial reform; Tea Party movement rises</li></ul>
+    <p class="story">With unified Democratic control, Obama&#x27;s stimulus and the Affordable Care Act passed without House Republican support. Conservative &quot;Blue Dog&quot; Democrats from swing districts often broke with their party, which accounts for the small uptick in cross-party connections. Many of them lost in 2010.</p>
+  </div>
+</article>
+
+<article class="cong" id="c112" aria-labelledby="h112">
+  <figure class="slide"><img src="img/c112.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 112th Congress: 47,449 connections, 3.8 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h112"><span class="num">112<sup>th</sup></span> Congress</h2>
+      <p class="yrs">2011–2013</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Barack Obama (D)</dd></div>
+      <div><dt>Speaker</dt><dd>John Boehner (R)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:44.4%"></i><i class="br" style="width:55.6%"></i></span>
+        <span class="sn"><span class="dn">193 D</span> · <span class="rn">242 R</span> · Republican majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,602</span> roll calls · threshold <span class="mono">815</span> agreements · <strong class="mono">3.8%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>2010 Tea Party wave: Republicans gain 63 seats</li><li>Debt-ceiling standoff and U.S. credit downgrade, 2011</li><li>Budget Control Act and &quot;fiscal cliff&quot;</li></ul>
+    <p class="story">The largest midterm swing since 1948 made John Boehner Speaker, with a large class of Tea Party members opposed to compromise. The 2011 debt-ceiling standoff led to the first downgrade of the U.S. credit rating. This is the last Congress in the original 2015 study.</p>
+  </div>
+</article>
+
+<article class="cong" id="c113" aria-labelledby="h113">
+  <figure class="slide"><img src="img/c113.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 113th Congress: 44,907 connections, 0.4 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h113"><span class="num">113<sup>th</sup></span> Congress</h2>
+      <p class="yrs">2013–2015</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Barack Obama (D)</dd></div>
+      <div><dt>Speaker</dt><dd>John Boehner (R)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:46.2%"></i><i class="br" style="width:53.8%"></i></span>
+        <span class="sn"><span class="dn">200 D</span> · <span class="rn">233 R</span> · Republican majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,202</span> roll calls · threshold <span class="mono">698</span> agreements · <strong class="mono">0.4%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>16-day government shutdown over the Affordable Care Act, October 2013</li><li>Majority Leader Eric Cantor loses his primary, 2014</li><li>Republicans win the Senate, 2014</li></ul>
+    <p class="story">Conservative pressure forced a government shutdown over funding the Affordable Care Act. Cantor&#x27;s surprise primary defeat showed that members&#x27; biggest electoral threat was often a challenge from within their own party. Cross-party connections fall back below 1 percent.</p>
+  </div>
+</article>
+
+<article class="cong" id="c114" aria-labelledby="h114">
+  <figure class="slide"><img src="img/c114.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 114th Congress: 47,646 connections, 0.6 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h114"><span class="num">114<sup>th</sup></span> Congress</h2>
+      <p class="yrs">2015–2017</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Barack Obama (D)</dd></div>
+      <div><dt>Speaker</dt><dd>John Boehner (R), then Paul Ryan (R)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:43.3%"></i><i class="br" style="width:56.7%"></i></span>
+        <span class="sn"><span class="dn">188 D</span> · <span class="rn">246 R</span> · Republican majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,322</span> roll calls · threshold <span class="mono">664</span> agreements · <strong class="mono">0.6%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>House Freedom Caucus forms, January 2015</li><li>Boehner resigns under conservative pressure, October 2015</li><li>Donald Trump elected, 2016</li></ul>
+    <p class="story">The Freedom Caucus organized to push leadership rightward, and Boehner resigned rather than face a revolt. Paul Ryan reluctantly took the gavel. A few bipartisan deals passed, such as the Medicare physician-payment fix, but the two parties&#x27; voting blocs stayed almost completely separate.</p>
+  </div>
+</article>
+
+<article class="cong" id="c115" aria-labelledby="h115">
+  <figure class="slide"><img src="img/c115.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 115th Congress: 46,753 connections, 0.6 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h115"><span class="num">115<sup>th</sup></span> Congress</h2>
+      <p class="yrs">2017–2019</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Donald Trump (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Paul Ryan (R)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:44.6%"></i><i class="br" style="width:55.4%"></i></span>
+        <span class="sn"><span class="dn">194 D</span> · <span class="rn">241 R</span> · Republican majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,207</span> roll calls · threshold <span class="mono">563</span> agreements · <strong class="mono">0.6%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>House passes ACA repeal 217–213; Senate effort fails, 2017</li><li>Tax Cuts and Jobs Act, December 2017</li><li>Shutdowns in January and December 2018</li></ul>
+    <p class="story">Unified Republican government focused on repealing the Affordable Care Act, which failed in the Senate, and on the 2017 tax law, which passed without Democratic votes. Ryan retired, and the 2018 midterms became a referendum on Trump.</p>
+  </div>
+</article>
+
+<article class="cong" id="c116" aria-labelledby="h116">
+  <figure class="slide"><img src="img/c116.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 116th Congress: 45,806 connections, 0.7 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h116"><span class="num">116<sup>th</sup></span> Congress</h2>
+      <p class="yrs">2019–2021</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Donald Trump (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Nancy Pelosi (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:54.1%"></i><i class="br" style="width:45.9%"></i></span>
+        <span class="sn"><span class="dn">235 D</span> · <span class="rn">199 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">952</span> roll calls · threshold <span class="mono">519</span> agreements · <strong class="mono">0.7%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>2018 midterms: Democrats gain about 40 seats</li><li>Record 35-day shutdown ends, January 2019</li><li>Trump impeached, December 2019; COVID-19 and CARES Act, 2020</li></ul>
+    <p class="story">Pelosi returned as Speaker. The first impeachment of Trump passed with no Republican votes. The pandemic produced the bipartisan CARES Act and the first remote &quot;proxy&quot; voting in House history.</p>
+  </div>
+</article>
+
+<article class="cong" id="c117" aria-labelledby="h117">
+  <figure class="slide"><img src="img/c117.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 117th Congress: 45,616 connections, 1.3 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h117"><span class="num">117<sup>th</sup></span> Congress</h2>
+      <p class="yrs">2021–2023</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Joe Biden (D)</dd></div>
+      <div><dt>Speaker</dt><dd>Nancy Pelosi (D)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:51.3%"></i><i class="br" style="width:48.7%"></i></span>
+        <span class="sn"><span class="dn">222 D</span> · <span class="rn">211 R</span> · Democratic majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">996</span> roll calls · threshold <span class="mono">555</span> agreements · <strong class="mono">1.3%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>January 6 attack on the Capitol, 2021</li><li>Second Trump impeachment; 10 Republicans vote yes</li><li>American Rescue Plan, Infrastructure law, CHIPS Act, Inflation Reduction Act</li></ul>
+    <p class="story">Democrats held a slim majority. Biden&#x27;s pandemic relief and the Inflation Reduction Act passed on party lines, while the infrastructure law and the CHIPS Act drew some Republican votes. The cross-party share ticks up slightly, to about 1.3 percent.</p>
+  </div>
+</article>
+
+<article class="cong" id="c118" aria-labelledby="h118">
+  <figure class="slide"><img src="img/c118.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 118th Congress: 46,375 connections, 0.9 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h118"><span class="num">118<sup>th</sup></span> Congress</h2>
+      <p class="yrs">2023–2025</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Joe Biden (D)</dd></div>
+      <div><dt>Speaker</dt><dd>Kevin McCarthy (R), then Mike Johnson (R)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:48.8%"></i><i class="br" style="width:51.2%"></i></span>
+        <span class="sn"><span class="dn">212 D</span> · <span class="rn">222 R</span> · Republican majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">1,235</span> roll calls · threshold <span class="mono">618</span> agreements · <strong class="mono">0.9%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>McCarthy elected Speaker on the 15th ballot, January 2023</li><li>First Speaker ever removed by a motion to vacate, October 2023</li><li>Mike Johnson elected; George Santos expelled, 2023</li></ul>
+    <p class="story">A narrow Republican majority took 15 ballots to elect McCarthy, who was ousted nine months later after making a debt-limit and spending deal with Democrats. The House went three weeks without a Speaker before electing Mike Johnson. Major bills, including stopgap funding, often needed Democratic votes to pass, angering the Republican right.</p>
+  </div>
+</article>
+
+<article class="cong" id="c119" aria-labelledby="h119">
+  <figure class="slide"><img src="img/c119.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 119th Congress: 45,997 connections, 0.3 percent between parties."></figure>
+  <div class="body">
+    <header>
+      <h2 id="h119"><span class="num">119<sup>th</sup></span> Congress</h2>
+      <p class="yrs">2025–2027</p>
+    </header>
+    <dl class="facts">
+      <div><dt>President</dt><dd>Donald Trump (R)</dd></div>
+      <div><dt>Speaker</dt><dd>Mike Johnson (R)</dd></div>
+      <div class="seats"><dt>House at opening</dt><dd>
+        <span class="bar" aria-hidden="true"><i class="bd" style="width:49.5%"></i><i class="br" style="width:50.5%"></i></span>
+        <span class="sn"><span class="dn">215 D</span> · <span class="rn">219 R</span> · Republican majority</span></dd></div>
+      <div class="stats"><dt>Network</dt><dd><span class="mono">674</span> roll calls · threshold <span class="mono">346</span> agreements · <strong class="mono">0.3%</strong> of connections cross party lines</dd></div>
+    </dl>
+    <ul class="events"><li>Unified Republican government; one of the narrowest House majorities in history</li><li>One Big Beautiful Bill Act passes the House 218–214, July 2025</li><li>Record 43-day shutdown, Oct.–Nov. 2025; Epstein files bill passes 427–1</li></ul>
+    <p class="story">Trump&#x27;s second term began with Republicans controlling both chambers by thin margins. The party-line budget and tax law passed by four votes. Fights over mid-decade redistricting spread from Texas to California. Rep. Kevin Kiley left the Republican Party in March 2026 to serve as an independent; Voteview lists him in both parties, so he appears twice. Data run through October 2026, so this Congress is incomplete.</p>
+  </div>
+</article>
+</main>
+
+<footer class="wrap">
+  <p><strong>Method.</strong> Following Andris, Lee, Hamilton, Martino, Gunning and Selden, "The Rise of Partisanship and
+    Super-Cooperators in the U.S. House of Representatives" (PLOS ONE, 2015): agreement counts the roll calls on which two
+    members both voted yea or both voted nay ("present" counts as nay, absences are dropped). Each Congress's threshold is where
+    the same-party and cross-party agreement histograms cross. Dot size reflects number of connections; line thickness reflects
+    agreement count. Layouts use a force-directed (ForceAtlas2-style) method, so position conveys clustering, not exact distance.</p>
+  <p><strong>Data.</strong> Voteview House roll-call votes and member records, 81st through 119th Congress, the 119th through
+    October 2026. Opening seat counts are estimated from members voting in each Congress's first 30 roll calls and may differ by a
+    seat or two from official tallies.</p>
+</footer>
+
+<script>
+(() => {
+  const chips = [...document.querySelectorAll('.chip')];
+  const byC = Object.fromEntries(chips.map(c => [c.dataset.c, c]));
+  const strip = document.getElementById('strip');
+  let current = null;
+  const setOn = c => {
+    if (c === current || !byC[c]) return;
+    if (current && byC[current]) byC[current].classList.remove('on');
+    current = c; const el = byC[c]; el.classList.add('on');
+    const s = strip.getBoundingClientRect(), r = el.getBoundingClientRect();
+    if (r.left < s.left || r.right > s.right) strip.scrollLeft += (r.left - s.left) - s.width / 2 + r.width / 2;
+  };
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) setOn(e.target.id.slice(1)); });
+    }, { rootMargin: '-35% 0px -60% 0px' });
+    document.querySelectorAll('.cong').forEach(a => io.observe(a));
+  }
+})();
+</script>
+
+</body>
+</html>
