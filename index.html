@@ -103,6 +103,35 @@ video { width: 100%; height: auto; aspect-ratio: 16/9; display: block; backgroun
 @media (max-width: 900px) { .cong { grid-template-columns: minmax(0, 1fr); gap: 16px; padding-block: 28px; } }
 .slide { margin: 0; }
 .slide img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; background: #fff; border: 1px solid var(--rule); border-radius: 3px; }
+.zoom { position: relative; display: block; cursor: zoom-in; border-radius: 3px; }
+.zhint { position: absolute; right: 10px; top: 10px; font: 500 .72rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase;
+         color: #fff; background: rgba(27, 37, 48, .78); padding: 7px 9px 7px 26px; border-radius: 3px; opacity: .88;
+         transition: opacity .15s; pointer-events: none; }
+.zhint::before { content: ""; position: absolute; left: 9px; top: 50%; width: 9px; height: 9px; margin-top: -6px;
+                 border: 1.6px solid #fff; border-radius: 50%; }
+.zhint::after { content: ""; position: absolute; left: 17px; top: 50%; width: 5px; height: 1.6px; margin-top: 3px;
+                background: #fff; transform: rotate(45deg); }
+.zoom:hover .zhint, .zoom:focus-visible .zhint { opacity: 1; }
+
+/* zoom viewer: deliberately dark in both themes so the white graph reads as the subject */
+.lb { position: fixed; inset: 0; z-index: 50; background: #090d11; color: #e8edf2;
+      display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+.lb-top, .lb-bot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
+                   padding: calc(env(safe-area-inset-top, 0px) + 10px) 16px 10px; }
+.lb-bot { padding: 10px 16px calc(env(safe-area-inset-bottom, 0px) + 12px); justify-content: center; }
+.lb-title { font: 600 1.2rem/1.2 var(--display); text-transform: uppercase; letter-spacing: .02em; margin: 0; flex: 1 1 auto; min-width: 0; }
+.lb-stage { position: relative; overflow: hidden; touch-action: none; cursor: grab; background: #0b0f13; }
+.lb-stage.drag { cursor: grabbing; }
+.lb-stage img { position: absolute; left: 0; top: 0; max-width: none; transform-origin: 0 0; user-select: none;
+                -webkit-user-drag: none; background: #fff; will-change: transform; }
+.lb button { font: 500 .85rem/1 var(--mono); color: #e8edf2; background: #1d2731; border: 1px solid #3a4856; border-radius: 3px;
+             min-width: 40px; height: 38px; padding: 0 12px; cursor: pointer; }
+.lb button:hover { background: #283542; }
+.lb button:focus-visible { outline: 2px solid #74b0c9; outline-offset: 2px; }
+.lb-pct { font: .85rem var(--mono); min-width: 4.5ch; text-align: center; font-variant-numeric: tabular-nums; color: #b7c3ce; }
+.lb-status { font: .78rem var(--mono); color: #9aa7b3; margin: 0; }
+.lb-help { font: .74rem/1.4 var(--mono); color: #8796a4; margin: 0; flex-basis: 100%; text-align: center; }
+@media (max-width: 560px) { .lb-help { display: none; } }
 .body { min-width: 0; display: grid; gap: 14px; }
 .body header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px;
                border-bottom: 2px solid var(--ink); padding-bottom: 6px; }
@@ -173,8 +202,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 <main class="wrap list">
 
 <article class="cong" id="c81" aria-labelledby="h81">
-  <figure class="slide"><img src="img/c81.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 81st Congress: 42,826 connections, 11.5 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c81.webp" data-c="81" data-label="81st Congress, 1949–1951"
+    aria-label="Open a zoomable high-resolution view of the 81st Congress graph"><img src="img/c81.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 81st Congress: 42,826 connections, 11.5 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h81"><span class="num">81<sup>st</sup></span> Congress</h2>
@@ -194,8 +224,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c82" aria-labelledby="h82">
-  <figure class="slide"><img src="img/c82.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 82nd Congress: 41,146 connections, 16.1 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c82.webp" data-c="82" data-label="82nd Congress, 1951–1953"
+    aria-label="Open a zoomable high-resolution view of the 82nd Congress graph"><img src="img/c82.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 82nd Congress: 41,146 connections, 16.1 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h82"><span class="num">82<sup>nd</sup></span> Congress</h2>
@@ -215,8 +246,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c83" aria-labelledby="h83">
-  <figure class="slide"><img src="img/c83.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 83rd Congress: 40,481 connections, 11.8 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c83.webp" data-c="83" data-label="83rd Congress, 1953–1955"
+    aria-label="Open a zoomable high-resolution view of the 83rd Congress graph"><img src="img/c83.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 83rd Congress: 40,481 connections, 11.8 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h83"><span class="num">83<sup>rd</sup></span> Congress</h2>
@@ -236,8 +268,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c84" aria-labelledby="h84">
-  <figure class="slide"><img src="img/c84.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 84th Congress: 43,654 connections, 11.2 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c84.webp" data-c="84" data-label="84th Congress, 1955–1957"
+    aria-label="Open a zoomable high-resolution view of the 84th Congress graph"><img src="img/c84.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 84th Congress: 43,654 connections, 11.2 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h84"><span class="num">84<sup>th</sup></span> Congress</h2>
@@ -257,8 +290,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c85" aria-labelledby="h85">
-  <figure class="slide"><img src="img/c85.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 85th Congress: 39,721 connections, 15.9 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c85.webp" data-c="85" data-label="85th Congress, 1957–1959"
+    aria-label="Open a zoomable high-resolution view of the 85th Congress graph"><img src="img/c85.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 85th Congress: 39,721 connections, 15.9 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h85"><span class="num">85<sup>th</sup></span> Congress</h2>
@@ -278,8 +312,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c86" aria-labelledby="h86">
-  <figure class="slide"><img src="img/c86.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 86th Congress: 45,565 connections, 13.6 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c86.webp" data-c="86" data-label="86th Congress, 1959–1961"
+    aria-label="Open a zoomable high-resolution view of the 86th Congress graph"><img src="img/c86.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 86th Congress: 45,565 connections, 13.6 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h86"><span class="num">86<sup>th</sup></span> Congress</h2>
@@ -299,8 +334,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c87" aria-labelledby="h87">
-  <figure class="slide"><img src="img/c87.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 87th Congress: 41,707 connections, 13.3 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c87.webp" data-c="87" data-label="87th Congress, 1961–1963"
+    aria-label="Open a zoomable high-resolution view of the 87th Congress graph"><img src="img/c87.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 87th Congress: 41,707 connections, 13.3 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h87"><span class="num">87<sup>th</sup></span> Congress</h2>
@@ -320,8 +356,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c88" aria-labelledby="h88">
-  <figure class="slide"><img src="img/c88.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 88th Congress: 40,209 connections, 11.2 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c88.webp" data-c="88" data-label="88th Congress, 1963–1965"
+    aria-label="Open a zoomable high-resolution view of the 88th Congress graph"><img src="img/c88.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 88th Congress: 40,209 connections, 11.2 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h88"><span class="num">88<sup>th</sup></span> Congress</h2>
@@ -341,8 +378,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c89" aria-labelledby="h89">
-  <figure class="slide"><img src="img/c89.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 89th Congress: 43,093 connections, 20.4 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c89.webp" data-c="89" data-label="89th Congress, 1965–1967"
+    aria-label="Open a zoomable high-resolution view of the 89th Congress graph"><img src="img/c89.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 89th Congress: 43,093 connections, 20.4 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h89"><span class="num">89<sup>th</sup></span> Congress</h2>
@@ -362,8 +400,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c90" aria-labelledby="h90">
-  <figure class="slide"><img src="img/c90.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 90th Congress: 38,386 connections, 22.4 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c90.webp" data-c="90" data-label="90th Congress, 1967–1969"
+    aria-label="Open a zoomable high-resolution view of the 90th Congress graph"><img src="img/c90.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 90th Congress: 38,386 connections, 22.4 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h90"><span class="num">90<sup>th</sup></span> Congress</h2>
@@ -383,8 +422,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c91" aria-labelledby="h91">
-  <figure class="slide"><img src="img/c91.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 91st Congress: 35,283 connections, 36.3 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c91.webp" data-c="91" data-label="91st Congress, 1969–1971"
+    aria-label="Open a zoomable high-resolution view of the 91st Congress graph"><img src="img/c91.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 91st Congress: 35,283 connections, 36.3 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h91"><span class="num">91<sup>st</sup></span> Congress</h2>
@@ -404,8 +444,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c92" aria-labelledby="h92">
-  <figure class="slide"><img src="img/c92.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 92nd Congress: 37,274 connections, 31.4 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c92.webp" data-c="92" data-label="92nd Congress, 1971–1973"
+    aria-label="Open a zoomable high-resolution view of the 92nd Congress graph"><img src="img/c92.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 92nd Congress: 37,274 connections, 31.4 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h92"><span class="num">92<sup>nd</sup></span> Congress</h2>
@@ -425,8 +466,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c93" aria-labelledby="h93">
-  <figure class="slide"><img src="img/c93.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 93rd Congress: 41,661 connections, 31.2 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c93.webp" data-c="93" data-label="93rd Congress, 1973–1975"
+    aria-label="Open a zoomable high-resolution view of the 93rd Congress graph"><img src="img/c93.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 93rd Congress: 41,661 connections, 31.2 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h93"><span class="num">93<sup>rd</sup></span> Congress</h2>
@@ -446,8 +488,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c94" aria-labelledby="h94">
-  <figure class="slide"><img src="img/c94.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 94th Congress: 45,812 connections, 24.4 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c94.webp" data-c="94" data-label="94th Congress, 1975–1977"
+    aria-label="Open a zoomable high-resolution view of the 94th Congress graph"><img src="img/c94.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 94th Congress: 45,812 connections, 24.4 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h94"><span class="num">94<sup>th</sup></span> Congress</h2>
@@ -467,8 +510,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c95" aria-labelledby="h95">
-  <figure class="slide"><img src="img/c95.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 95th Congress: 48,498 connections, 27.7 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c95.webp" data-c="95" data-label="95th Congress, 1977–1979"
+    aria-label="Open a zoomable high-resolution view of the 95th Congress graph"><img src="img/c95.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 95th Congress: 48,498 connections, 27.7 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h95"><span class="num">95<sup>th</sup></span> Congress</h2>
@@ -488,8 +532,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c96" aria-labelledby="h96">
-  <figure class="slide"><img src="img/c96.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 96th Congress: 48,135 connections, 24.6 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c96.webp" data-c="96" data-label="96th Congress, 1979–1981"
+    aria-label="Open a zoomable high-resolution view of the 96th Congress graph"><img src="img/c96.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 96th Congress: 48,135 connections, 24.6 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h96"><span class="num">96<sup>th</sup></span> Congress</h2>
@@ -509,8 +554,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c97" aria-labelledby="h97">
-  <figure class="slide"><img src="img/c97.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 97th Congress: 39,504 connections, 24.5 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c97.webp" data-c="97" data-label="97th Congress, 1981–1983"
+    aria-label="Open a zoomable high-resolution view of the 97th Congress graph"><img src="img/c97.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 97th Congress: 39,504 connections, 24.5 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h97"><span class="num">97<sup>th</sup></span> Congress</h2>
@@ -530,8 +576,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c98" aria-labelledby="h98">
-  <figure class="slide"><img src="img/c98.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 98th Congress: 48,028 connections, 16.4 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c98.webp" data-c="98" data-label="98th Congress, 1983–1985"
+    aria-label="Open a zoomable high-resolution view of the 98th Congress graph"><img src="img/c98.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 98th Congress: 48,028 connections, 16.4 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h98"><span class="num">98<sup>th</sup></span> Congress</h2>
@@ -551,8 +598,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c99" aria-labelledby="h99">
-  <figure class="slide"><img src="img/c99.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 99th Congress: 46,136 connections, 11.2 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c99.webp" data-c="99" data-label="99th Congress, 1985–1987"
+    aria-label="Open a zoomable high-resolution view of the 99th Congress graph"><img src="img/c99.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 99th Congress: 46,136 connections, 11.2 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h99"><span class="num">99<sup>th</sup></span> Congress</h2>
@@ -572,8 +620,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c100" aria-labelledby="h100">
-  <figure class="slide"><img src="img/c100.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 100th Congress: 46,116 connections, 10.9 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c100.webp" data-c="100" data-label="100th Congress, 1987–1989"
+    aria-label="Open a zoomable high-resolution view of the 100th Congress graph"><img src="img/c100.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 100th Congress: 46,116 connections, 10.9 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h100"><span class="num">100<sup>th</sup></span> Congress</h2>
@@ -593,8 +642,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c101" aria-labelledby="h101">
-  <figure class="slide"><img src="img/c101.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 101st Congress: 47,650 connections, 12.7 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c101.webp" data-c="101" data-label="101st Congress, 1989–1991"
+    aria-label="Open a zoomable high-resolution view of the 101st Congress graph"><img src="img/c101.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 101st Congress: 47,650 connections, 12.7 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h101"><span class="num">101<sup>st</sup></span> Congress</h2>
@@ -614,8 +664,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c102" aria-labelledby="h102">
-  <figure class="slide"><img src="img/c102.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 102nd Congress: 48,734 connections, 7.3 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c102.webp" data-c="102" data-label="102nd Congress, 1991–1993"
+    aria-label="Open a zoomable high-resolution view of the 102nd Congress graph"><img src="img/c102.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 102nd Congress: 48,734 connections, 7.3 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h102"><span class="num">102<sup>nd</sup></span> Congress</h2>
@@ -635,8 +686,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c103" aria-labelledby="h103">
-  <figure class="slide"><img src="img/c103.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 103rd Congress: 47,802 connections, 3.5 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c103.webp" data-c="103" data-label="103rd Congress, 1993–1995"
+    aria-label="Open a zoomable high-resolution view of the 103rd Congress graph"><img src="img/c103.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 103rd Congress: 47,802 connections, 3.5 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h103"><span class="num">103<sup>rd</sup></span> Congress</h2>
@@ -656,8 +708,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c104" aria-labelledby="h104">
-  <figure class="slide"><img src="img/c104.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 104th Congress: 45,479 connections, 5.4 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c104.webp" data-c="104" data-label="104th Congress, 1995–1997"
+    aria-label="Open a zoomable high-resolution view of the 104th Congress graph"><img src="img/c104.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 104th Congress: 45,479 connections, 5.4 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h104"><span class="num">104<sup>th</sup></span> Congress</h2>
@@ -677,8 +730,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c105" aria-labelledby="h105">
-  <figure class="slide"><img src="img/c105.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 105th Congress: 44,540 connections, 3.3 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c105.webp" data-c="105" data-label="105th Congress, 1997–1999"
+    aria-label="Open a zoomable high-resolution view of the 105th Congress graph"><img src="img/c105.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 105th Congress: 44,540 connections, 3.3 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h105"><span class="num">105<sup>th</sup></span> Congress</h2>
@@ -698,8 +752,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c106" aria-labelledby="h106">
-  <figure class="slide"><img src="img/c106.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 106th Congress: 44,911 connections, 4.8 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c106.webp" data-c="106" data-label="106th Congress, 1999–2001"
+    aria-label="Open a zoomable high-resolution view of the 106th Congress graph"><img src="img/c106.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 106th Congress: 44,911 connections, 4.8 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h106"><span class="num">106<sup>th</sup></span> Congress</h2>
@@ -719,8 +774,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c107" aria-labelledby="h107">
-  <figure class="slide"><img src="img/c107.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 107th Congress: 44,599 connections, 3.7 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c107.webp" data-c="107" data-label="107th Congress, 2001–2003"
+    aria-label="Open a zoomable high-resolution view of the 107th Congress graph"><img src="img/c107.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 107th Congress: 44,599 connections, 3.7 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h107"><span class="num">107<sup>th</sup></span> Congress</h2>
@@ -740,8 +796,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c108" aria-labelledby="h108">
-  <figure class="slide"><img src="img/c108.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 108th Congress: 45,510 connections, 1.0 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c108.webp" data-c="108" data-label="108th Congress, 2003–2005"
+    aria-label="Open a zoomable high-resolution view of the 108th Congress graph"><img src="img/c108.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 108th Congress: 45,510 connections, 1.0 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h108"><span class="num">108<sup>th</sup></span> Congress</h2>
@@ -761,8 +818,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c109" aria-labelledby="h109">
-  <figure class="slide"><img src="img/c109.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 109th Congress: 45,550 connections, 1.0 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c109.webp" data-c="109" data-label="109th Congress, 2005–2007"
+    aria-label="Open a zoomable high-resolution view of the 109th Congress graph"><img src="img/c109.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 109th Congress: 45,550 connections, 1.0 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h109"><span class="num">109<sup>th</sup></span> Congress</h2>
@@ -782,8 +840,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c110" aria-labelledby="h110">
-  <figure class="slide"><img src="img/c110.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 110th Congress: 44,242 connections, 0.3 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c110.webp" data-c="110" data-label="110th Congress, 2007–2009"
+    aria-label="Open a zoomable high-resolution view of the 110th Congress graph"><img src="img/c110.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 110th Congress: 44,242 connections, 0.3 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h110"><span class="num">110<sup>th</sup></span> Congress</h2>
@@ -803,8 +862,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c111" aria-labelledby="h111">
-  <figure class="slide"><img src="img/c111.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 111th Congress: 46,265 connections, 2.7 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c111.webp" data-c="111" data-label="111th Congress, 2009–2011"
+    aria-label="Open a zoomable high-resolution view of the 111th Congress graph"><img src="img/c111.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 111th Congress: 46,265 connections, 2.7 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h111"><span class="num">111<sup>th</sup></span> Congress</h2>
@@ -824,8 +884,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c112" aria-labelledby="h112">
-  <figure class="slide"><img src="img/c112.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 112th Congress: 47,449 connections, 3.8 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c112.webp" data-c="112" data-label="112th Congress, 2011–2013"
+    aria-label="Open a zoomable high-resolution view of the 112th Congress graph"><img src="img/c112.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 112th Congress: 47,449 connections, 3.8 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h112"><span class="num">112<sup>th</sup></span> Congress</h2>
@@ -845,8 +906,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c113" aria-labelledby="h113">
-  <figure class="slide"><img src="img/c113.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 113th Congress: 44,907 connections, 0.4 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c113.webp" data-c="113" data-label="113th Congress, 2013–2015"
+    aria-label="Open a zoomable high-resolution view of the 113th Congress graph"><img src="img/c113.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 113th Congress: 44,907 connections, 0.4 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h113"><span class="num">113<sup>th</sup></span> Congress</h2>
@@ -866,8 +928,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c114" aria-labelledby="h114">
-  <figure class="slide"><img src="img/c114.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 114th Congress: 47,646 connections, 0.6 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c114.webp" data-c="114" data-label="114th Congress, 2015–2017"
+    aria-label="Open a zoomable high-resolution view of the 114th Congress graph"><img src="img/c114.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 114th Congress: 47,646 connections, 0.6 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h114"><span class="num">114<sup>th</sup></span> Congress</h2>
@@ -887,8 +950,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c115" aria-labelledby="h115">
-  <figure class="slide"><img src="img/c115.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 115th Congress: 46,753 connections, 0.6 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c115.webp" data-c="115" data-label="115th Congress, 2017–2019"
+    aria-label="Open a zoomable high-resolution view of the 115th Congress graph"><img src="img/c115.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 115th Congress: 46,753 connections, 0.6 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h115"><span class="num">115<sup>th</sup></span> Congress</h2>
@@ -908,8 +972,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c116" aria-labelledby="h116">
-  <figure class="slide"><img src="img/c116.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 116th Congress: 45,806 connections, 0.7 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c116.webp" data-c="116" data-label="116th Congress, 2019–2021"
+    aria-label="Open a zoomable high-resolution view of the 116th Congress graph"><img src="img/c116.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 116th Congress: 45,806 connections, 0.7 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h116"><span class="num">116<sup>th</sup></span> Congress</h2>
@@ -929,8 +994,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c117" aria-labelledby="h117">
-  <figure class="slide"><img src="img/c117.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 117th Congress: 45,616 connections, 1.3 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c117.webp" data-c="117" data-label="117th Congress, 2021–2023"
+    aria-label="Open a zoomable high-resolution view of the 117th Congress graph"><img src="img/c117.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 117th Congress: 45,616 connections, 1.3 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h117"><span class="num">117<sup>th</sup></span> Congress</h2>
@@ -950,8 +1016,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c118" aria-labelledby="h118">
-  <figure class="slide"><img src="img/c118.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 118th Congress: 46,375 connections, 0.9 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c118.webp" data-c="118" data-label="118th Congress, 2023–2025"
+    aria-label="Open a zoomable high-resolution view of the 118th Congress graph"><img src="img/c118.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 118th Congress: 46,375 connections, 0.9 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h118"><span class="num">118<sup>th</sup></span> Congress</h2>
@@ -971,8 +1038,9 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 
 <article class="cong" id="c119" aria-labelledby="h119">
-  <figure class="slide"><img src="img/c119.webp" width="1920" height="1080" loading="lazy" decoding="async"
-    alt="Agreement network for the 119th Congress: 45,997 connections, 0.3 percent between parties."></figure>
+  <figure class="slide"><a class="zoom" href="img/hi/c119.webp" data-c="119" data-label="119th Congress, 2025–2027"
+    aria-label="Open a zoomable high-resolution view of the 119th Congress graph"><img src="img/c119.webp" width="1920" height="1080" loading="lazy" decoding="async"
+    alt="Agreement network for the 119th Congress: 45,997 connections, 0.3 percent between parties."><span class="zhint" aria-hidden="true">Zoom to read names</span></a></figure>
   <div class="body">
     <header>
       <h2 id="h119"><span class="num">119<sup>th</sup></span> Congress</h2>
@@ -992,6 +1060,24 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </article>
 </main>
 
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-labelledby="lbTitle" hidden>
+  <div class="lb-top">
+    <h2 class="lb-title" id="lbTitle">Congress</h2>
+    <p class="lb-status" id="lbStatus" aria-live="polite"></p>
+    <button type="button" id="lbClose" aria-label="Close viewer">Close ✕</button>
+  </div>
+  <div class="lb-stage" id="lbStage"><img id="lbImg" alt="" width="4800" height="2700" draggable="false"></div>
+  <div class="lb-bot">
+    <button type="button" id="lbPrev" aria-label="Previous Congress">← Prev</button>
+    <button type="button" id="lbOut" aria-label="Zoom out">−</button>
+    <span class="lb-pct" id="lbPct">100%</span>
+    <button type="button" id="lbIn" aria-label="Zoom in">+</button>
+    <button type="button" id="lbFit">Fit</button>
+    <button type="button" id="lbNext" aria-label="Next Congress">Next →</button>
+    <p class="lb-help">Scroll or pinch to zoom · drag to move · double-click to zoom in · ← → for other Congresses · Esc to close</p>
+  </div>
+</div>
+
 <footer class="wrap">
   <p><strong>Method.</strong> Following Andris, Lee, Hamilton, Martino, Gunning and Selden, "The Rise of Partisanship and
     Super-Cooperators in the U.S. House of Representatives" (PLOS ONE, 2015): agreement counts the roll calls on which two
@@ -1004,6 +1090,101 @@ footer p { max-width: 75ch; margin: 0 0 .7rem; }
 </footer>
 
 <script>
+/* zoom viewer */
+(() => {
+  const lb = document.getElementById('lb'), stage = document.getElementById('lbStage'), img = document.getElementById('lbImg');
+  const title = document.getElementById('lbTitle'), status = document.getElementById('lbStatus'), pctEl = document.getElementById('lbPct');
+  const links = [...document.querySelectorAll('a.zoom')];
+  const IW = 4800, IH = 2700, MAX = 1.5;           // 1.0 = full 4800-px resolution
+  let i = -1, s = 1, x = 0, y = 0, fit = 1, opener = null, token = 0;
+
+  const apply = () => {
+    img.style.transform = `translate(${x}px, ${y}px) scale(${s})`;
+    pctEl.textContent = Math.round(s / fit * 100) + '%';
+  };
+  const clamp = () => {
+    const w = stage.clientWidth, h = stage.clientHeight, iw = IW * s, ih = IH * s;
+    x = iw <= w ? (w - iw) / 2 : Math.min(0, Math.max(w - iw, x));
+    y = ih <= h ? (h - ih) / 2 : Math.min(0, Math.max(h - ih, y));
+  };
+  const toFit = () => { fit = Math.min(stage.clientWidth / IW, stage.clientHeight / IH); s = fit; clamp(); apply(); };
+  const zoomAt = (ns, px, py) => {
+    ns = Math.min(MAX, Math.max(fit, ns));
+    x = px - (px - x) * ns / s; y = py - (py - y) * ns / s; s = ns; clamp(); apply();
+  };
+  const center = () => [stage.clientWidth / 2, stage.clientHeight / 2];
+
+  const show = k => {
+    i = (k + links.length) % links.length;
+    const a = links[i], my = ++token;
+    title.textContent = a.dataset.label;
+    img.src = a.querySelector('img').currentSrc || a.querySelector('img').src;   // sharp-enough preview first
+    status.textContent = 'Loading full resolution…';
+    const hi = new Image();
+    hi.onload = () => { if (my === token) { img.src = hi.src; status.textContent = 'Full resolution'; } };
+    hi.onerror = () => { if (my === token) status.textContent = 'Full-resolution image unavailable; showing the preview.'; };
+    hi.src = a.getAttribute('href');
+    toFit();
+  };
+  const open = (k, from) => {
+    opener = from; lb.hidden = false; document.documentElement.style.overflow = 'hidden';
+    show(k); document.getElementById('lbClose').focus();
+  };
+  const close = () => {
+    lb.hidden = true; document.documentElement.style.overflow = ''; token++;
+    if (opener) opener.focus({ preventScroll: true });
+  };
+
+  links.forEach((a, k) => a.addEventListener('click', e => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;   // allow open-in-new-tab
+    e.preventDefault(); open(k, a);
+  }));
+  document.getElementById('lbClose').onclick = close;
+  document.getElementById('lbPrev').onclick = () => show(i - 1);
+  document.getElementById('lbNext').onclick = () => show(i + 1);
+  document.getElementById('lbIn').onclick = () => zoomAt(s * 1.6, ...center());
+  document.getElementById('lbOut').onclick = () => zoomAt(s / 1.6, ...center());
+  document.getElementById('lbFit').onclick = toFit;
+  addEventListener('resize', () => { if (!lb.hidden) { const r = s / fit; fit = Math.min(stage.clientWidth / IW, stage.clientHeight / IH); s = Math.max(fit, fit * r); clamp(); apply(); } });
+
+  lb.addEventListener('keydown', e => {
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') show(i - 1);
+    else if (e.key === 'ArrowRight') show(i + 1);
+    else if (e.key === '+' || e.key === '=') zoomAt(s * 1.6, ...center());
+    else if (e.key === '-' || e.key === '_') zoomAt(s / 1.6, ...center());
+    else if (e.key === '0') toFit();
+    else if (e.key === 'Tab') {                         // keep focus inside the dialog
+      const f = [...lb.querySelectorAll('button')]; const a = f[0], z = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    }
+  });
+
+  const pos = e => { const r = stage.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  stage.addEventListener('wheel', e => { e.preventDefault(); zoomAt(s * Math.exp(-e.deltaY * 0.0018), ...pos(e)); }, { passive: false });
+  stage.addEventListener('dblclick', e => zoomAt(s < fit * 1.9 ? s * 3 : fit, ...pos(e)));
+
+  const pts = new Map(); let last = null, pinch = null;
+  stage.addEventListener('pointerdown', e => {
+    stage.setPointerCapture(e.pointerId); pts.set(e.pointerId, pos(e)); stage.classList.add('drag');
+    if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]), s }; }
+    last = pos(e);
+  });
+  stage.addEventListener('pointermove', e => {
+    if (!pts.has(e.pointerId)) return;
+    pts.set(e.pointerId, pos(e));
+    if (pts.size === 2 && pinch) {
+      const [a, b] = [...pts.values()];
+      zoomAt(pinch.s * Math.hypot(a[0] - b[0], a[1] - b[1]) / pinch.d, (a[0] + b[0]) / 2, (a[1] + b[1]) / 2);
+    } else if (pts.size === 1 && last) {
+      const p = pos(e); x += p[0] - last[0]; y += p[1] - last[1]; last = p; clamp(); apply();
+    }
+  });
+  const up = e => { pts.delete(e.pointerId); pinch = null; last = pts.size ? [...pts.values()][0] : null; if (!pts.size) stage.classList.remove('drag'); };
+  stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
+})();
+
 (() => {
   const chips = [...document.querySelectorAll('.chip')];
   const byC = Object.fromEntries(chips.map(c => [c.dataset.c, c]));
